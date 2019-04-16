@@ -2,4 +2,4 @@
 <p><%= @project.summary %></p>
 <p><%= @project.start_date %></p>
 <hr>
-<%= link_to 'Edit', edit_project_path(@project), class: 'btn btn-primary' %>
+<%= link_to 'Edit', edit_project_path(@project), class: 'btn btn-primary' if current_user.admin?%>

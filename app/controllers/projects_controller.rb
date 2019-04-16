@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :is_admin, only:[:edit, :update, :new, :destroy, :create]
   before_action :set_project, only: [:edit, :update, :show, :destroy]
   def index
     @projects = Project.order(id: :desc).page(params[:page])
