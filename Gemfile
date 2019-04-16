@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.1'
+# Auth
+gem 'devise'
 # Date validator
 gem 'validates_timeliness', '~> 5.0.0.alpha3'
 # Pagination

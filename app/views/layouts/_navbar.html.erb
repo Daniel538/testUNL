@@ -2,14 +2,18 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-8 col-md-7 py-4">
-        <h4 class="text-white">UNLSolutions test</h4>
+        <h4 class="text-white">Test RoR</h4>
+        <small class="text-white">Learning to build a modern web application is daunting.
+          Ruby on Rails makes it much easier and more fun. It includes everything you need
+          to build fantastic applications, and you can learn it with the support of our large,
+          friendly community.</small>
       </div>
       <div class="col-sm-4 offset-md-1 py-4">
         <h4 class="text-white">Menu</h4>
         <ul class="list-unstyled">
           <li><a href="#" class="text-white">link</a></li>
           <li><a href="#" class="text-white">link</a></li>
-          <li><a href="#" class="text-white">link</a></li>
+          <li><%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "text-white" %></li>
         </ul>
       </div>
     </div>
@@ -21,8 +25,11 @@
       <i class="fas fa-laptop-code"></i>
       <strong>Test</strong>
     </a>
+    <div class="row">
+    <strong class="navbar-brand d-flex align-items-right text-white">Hi, <%= current_user.first_name + ' ' + current_user.last_name %></strong>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    </div>
   </div>
 </div>
