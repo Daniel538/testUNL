@@ -1,0 +1,50 @@
+
+<div class="col-md-8 offset-md-2">
+  <h2 class="text-center pt-3">Edit task</h2>
+  <hr>
+  <%= form_for @task, url: project_task_url do |f| %>
+    <% if @task.errors.any? %>
+      <% @task.errors.full_messages.each do |msg| %>
+        <div class="alert alert-danger"><%= msg %></div>
+      <% end %>
+    <% end %>
+    <div class="form-group row">
+      <label for="title" class="col-sm-2 col-form-label">Title</label>
+      <div class="col-sm-10">
+        <%= f.text_field(:title, {class: 'form-control', id: 'title'}) %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="description" class="col-sm-2 col-form-label">Description</label>
+      <div class="col-sm-10">
+        <%= f.text_area(:description, {class: 'form-control', id: 'description'}) %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label" class="col-sm-2 col-form-label">Status</label>
+      <div class="col-sm-10">
+        <%= f.select(:status, ['new', 'in progress', 'done']) %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label" class="col-sm-2 col-form-label">User</label>
+      <div class="col-sm-10">
+        <%= f.select(:user_id) do %>
+          <%= @users.each do |user| %>
+            <%= content_tag(:option, user.first_name + " " + user.last_name, value: user.id) %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="form-group col-md-12">
+      <%= f.submit({class: 'btn btn-success btn-lg'}) %>
+      <%= link_to 'Cancel', project_path(@project), class: 'btn btn-outline-success btn-lg'%>
+      <%= link_to 'Delete', project_task_url(), method: :delete, class: 'btn btn-danger btn-lg', data: {confirm: 'delete it?'}%>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  var cur_user = '<%= @task.user_id %>';
+  $("#task_user_id option[value=" + cur_user + "]").attr("selected", "selected");
+</script>

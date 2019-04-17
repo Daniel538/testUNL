@@ -6,4 +6,10 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true, length: {minimum: 6}
   validates :last_name, presence: true, length: {minimum: 6}
+
+  has_many :tasks
+
+  def get_users
+    User.select("id, first_name, last_name")
+  end
 end
