@@ -6,4 +6,7 @@ class Project < ApplicationRecord
 
   # Ressource : https://github.com/adzap/validates_timeliness
   validates_date :end_date, after: :start_date
+
+  has_many :tasks, dependent: :destroy
+
 end
