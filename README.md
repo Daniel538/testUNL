@@ -1,24 +1,25 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+For launch project
 
-Things you may want to cover:
+    git clone https://github.com/Daniel538/testUNL.git -b develop
+    
+Then bundle:  
 
-* Ruby version
+    bundle install
+    
+And
+    
+    rake db:setup
+    
+**Admin user**
 
-* System dependencies
+* Login: ***dane105@mail.ru***
 
-* Configuration
+* Password: ***123123***
+    
+**Standard user**
 
-* Database creation
+* Login: ***test105@mail.ru***
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Password: ***123123***
