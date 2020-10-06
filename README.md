@@ -4,13 +4,21 @@ For launch project
 
     git clone https://github.com/Daniel538/testUNL.git -b develop
     
-Then bundle:  
+Then build the image:  
 
-    bundle install
+    docker-compose build 
     
-And
+Up containers:
     
-    rake db:setup
+    docker-compose up
+    
+Make migrations: 
+
+    docker exec -it $YOUR_WEB_CONTAINER bin/rails db:migrate
+
+Seed fake data:
+
+    docker exec -it $YOUR_WEB_CONTAINER rake db:seed
     
 **Admin user**
 
