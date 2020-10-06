@@ -12,7 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2019_04_17_074715) do
 
-  create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "projects", force: :cascade do |t|
     t.string "name", null: false
     t.text "summary", null: false
     t.date "start_date"
@@ -21,7 +24,7 @@ ActiveRecord::Schema.define(version: 2019_04_17_074715) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "tasks", force: :cascade do |t|
     t.integer "project_id", null: false
     t.integer "user_id"
     t.string "title", null: false
@@ -31,7 +34,7 @@ ActiveRecord::Schema.define(version: 2019_04_17_074715) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
