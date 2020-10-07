@@ -4,8 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable,
           :rememberable, :registerable,:validatable
 
-  validates :first_name, presence: true, length: {minimum: 6}
-  validates :last_name, presence: true, length: {minimum: 6}
+  validates :first_name, presence: true, length: {minimum: 2}
+  validates :last_name, presence: true, length: {minimum: 2}
 
   has_many :tasks
 

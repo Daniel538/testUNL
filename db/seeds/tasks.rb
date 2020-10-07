@@ -1,46 +1,30 @@
-if Task.count.zero?
-  puts 'Tasks'
-  Task.create!(title: 'Task 1', description: 'Learning to build a modern web application is daunting.
-          Ruby on Rails makes it much easier and more fun. It includes everything you need
-          to build fantastic applications, and you can learn it with the support of our large,
-          friendly community.', status: 'new', user_id: 1, project_id: 16)
-  Task.create!(title: 'Task 2', description: 'Learning to build a modern web application is daunting.
-          Ruby on Rails makes it much easier and more fun. It includes everything you need
-          to build fantastic applications, and you can learn it with the support of our large,
-          friendly community.', status: 'new', user_id: 1, project_id: 16)
-  Task.create!(title: 'Task 3', description: 'Learning to build a modern web application is daunting.
-          Ruby on Rails makes it much easier and more fun. It includes everything you need
-          to build fantastic applications, and you can learn it with the support of our large,
-          friendly community.', status: 'new', user_id: 1, project_id: 16)
-  Task.create!(title: 'Task 4', description: 'Learning to build a modern web application is daunting.
-          Ruby on Rails makes it much easier and more fun. It includes everything you need
-          to build fantastic applications, and you can learn it with the support of our large,
-          friendly community.', status: 'new', user_id: 1, project_id: 16)
-  Task.create!(title: 'Task 5', description: 'Learning to build a modern web application is daunting.
-          Ruby on Rails makes it much easier and more fun. It includes everything you need
-          to build fantastic applications, and you can learn it with the support of our large,
-          friendly community.', status: 'new', user_id: 2, project_id: 16)
-  Task.create!(title: 'Task 6', description: 'Learning to build a modern web application is daunting.
-          Ruby on Rails makes it much easier and more fun. It includes everything you need
-          to build fantastic applications, and you can learn it with the support of our large,
-          friendly community.', status: 'new', user_id: 1, project_id: 16)
-  Task.create!(title: 'Task 7', description: 'Learning to build a modern web application is daunting.
-          Ruby on Rails makes it much easier and more fun. It includes everything you need
-          to build fantastic applications, and you can learn it with the support of our large,
-          friendly community.', status: 'new', user_id: 1, project_id: 16)
-  Task.create!(title: 'Task 8', description: 'Learning to build a modern web application is daunting.
-          Ruby on Rails makes it much easier and more fun. It includes everything you need
-          to build fantastic applications, and you can learn it with the support of our large,
-          friendly community.', status: 'new', user_id: 2, project_id: 16)
-  Task.create!(title: 'Task 9', description: 'Learning to build a modern web application is daunting.
-          Ruby on Rails makes it much easier and more fun. It includes everything you need
-          to build fantastic applications, and you can learn it with the support of our large,
-          friendly community.', status: 'new', user_id: 2, project_id: 16)
-  Task.create!(title: 'Task 10', description: 'Learning to build a modern web application is daunting.
-          Ruby on Rails makes it much easier and more fun. It includes everything you need
-          to build fantastic applications, and you can learn it with the support of our large,
-          friendly community.', status: 'new', user_id: 1, project_id: 16)
+require "faker"
 
+user_ids = User.pluck(:id)
+project_ids = Project.pluck(:id)
+available_statuses = ["new", "in progress", "in review", "done"]
 
+def get_dummy_task(user_ids, project_ids, available_statuses)
+  {
+    title: Faker::Lorem.sentence(word_count: 3),
+    description: Faker::Lorem.paragraph(sentence_count: 5),
+    status: available_statuses.sample,
+    assignee: user_ids.sample,
+    created_by_id: user_ids.sample,
+    project_id: project_ids.sample
+  }
+end
 
+puts "Generation of fake Stories"
+35.times do
+  dummy_story = get_dummy_task(user_ids, project_ids, available_statuses)
+  puts dummy_story
+  Story.create(dummy_story)
+end
+
+puts "Generation of fake Issues"
+35.times do
+  dummy_issue = get_dummy_task(user_ids, project_ids, available_statuses)
+  puts dummy_issue
+  Issue.create(dummy_issue)
 end
