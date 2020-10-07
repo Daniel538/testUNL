@@ -29,7 +29,7 @@
     <tr>
       <th scope="row"><%= task.title %></th>
       <td><%= task.status %></td>
-      <td><i><%= task.user.first_name + " " + task.user.last_name %></i></td>
+      <td><i><%= task.assignee.first_name + " " + task.assignee.last_name %></i></td>
       <td>
         <%= link_to 'Show', project_task_path(@project.id, task.id), class: 'btn btn-sm btn-outline-secondary' %>
         <%= link_to 'Edit', edit_project_task_path(@project.id, task.id), class: 'btn btn-sm btn-outline-secondary' if current_user.admin?%>

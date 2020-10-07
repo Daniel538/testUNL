@@ -12,4 +12,8 @@ class User < ApplicationRecord
   def get_users
     User.select("id, first_name, last_name")
   end
+
+  def get_full_name
+    first_name + " " + last_name
+  end
 end

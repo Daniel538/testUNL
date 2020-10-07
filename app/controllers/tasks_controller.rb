@@ -15,17 +15,16 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to project_path(@project), notice: 'The task was edited successfully'
+      redirect_to project_path(@project), notice: "The task was edited successfully"
     else
       redirect_to project_path(@project), alert: @task.errors.full_messages
     end
   end
 
   def create
-    #render plain: params[:project].inspect
-    @task = @project.tasks.create(task_params)
+    @task = @project.tasks.create(task_params.merge(created_by: current_user))
     if @task.save
-      redirect_to project_path(@project), notice: 'The task was created successfully'
+      redirect_to project_path(@project), notice: "The task was created successfully"
     else
       redirect_to project_path(@project), alert: @task.errors.full_messages
     end
@@ -33,17 +32,23 @@ class TasksController < ApplicationController
 
   def destroy
     if @task.destroy
-      redirect_to @project, notice: 'The task was deleted successfully'
+      redirect_to @project, notice: "The task was deleted successfully"
     else
-      redirect_to @project, alert: 'Undefined exception. Try again.'
+      redirect_to @project, alert: "Undefined exception. Try again."
     end
   end
 
 
 
   private
+
   def task_params
-    params.require(:task).permit(:title,:description,:status,:user_id)
+    if params.has_key? :issue
+      params[:task] = params.delete :issue
+    elsif params.has_key? :story
+      params[:task] = params.delete :story
+    end
+    params.require(:task).permit(:title, :description, :status, :assignee_id, :type)
   end
 
   def set_project
@@ -52,7 +57,6 @@ class TasksController < ApplicationController
 
   def set_task
     @task ||= @project.tasks.find(params[:id])
-    # @task = Task.find(params[:id])
   end
 
   def get_users
