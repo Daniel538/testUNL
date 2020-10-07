@@ -14,7 +14,11 @@ class TasksController < ApplicationController
   end
 
   def update
+    old_status = @task.status
     if @task.update(task_params)
+      if @task.status != old_status
+        status_changed_send_email
+      end
       redirect_to project_path(@project), notice: "The task was edited successfully"
     else
       redirect_to project_path(@project), alert: @task.errors.full_messages
@@ -24,9 +28,16 @@ class TasksController < ApplicationController
   def create
     @task = @project.tasks.create(task_params.merge(created_by: current_user))
     if @task.save
+      TaskMailer.with(user: @task.assignee, task: @task).task_changed.deliver_later
       redirect_to project_path(@project), notice: "The task was created successfully"
     else
       redirect_to project_path(@project), alert: @task.errors.full_messages
+    end
+  end
+
+  def status_changed_send_email
+    if ["in progress", "in review", "done"].include? @task.status
+      TaskMailer.with(user: current_user, task: @task).task_changed.deliver_later
     end
   end
 
