@@ -13,11 +13,37 @@
     </div>
   </div>
 </div>
+<!--<%#= link_to(@task.title, @task.url, target: "_blank") %><br/>-->
+<!--<small>Submitted <%#= time_ago_in_words(@story.created_at) %> ago</small>-->
+
+<h3>Comments</h3>
+<%= simple_form_for [@task.becomes(Task), Comment.new] do |f| %>
+  <%= f.text_area :text, placeholder: "Add a comment" %><br/>
+  <%= f.submit "Add Comment" %>
+<% end %>
+
+<ul>
+  <%= render(partial: 'comments/comment', collection: @task.comments) %>
+</ul>
 <div class="col-md-4">
   <%= link_to 'Edit', edit_project_task_path(@project.id, @task.id), class: 'btn btn-lg btn-success' if current_user.admin?%>
   <%= link_to 'Cancel', project_path(@project), class: 'btn btn-outline-success btn-lg' %>
   <%= link_to 'Delete', project_task_url(@project.id, @task.id), method: :delete, class: 'btn btn-danger btn-lg', data: {confirm: 'delete it?'} if current_user.admin?%>
 </div>
 
-
+<script>
+    const display_comment_form = (comment_id) => {
+        document.getElementById(comment_id + "_comment_text").style.display = 'block';
+        document.getElementById(comment_id).style.display = 'block';
+        document.getElementById(comment_id + "_hide_form").style.display = 'block';
+        console.log(document.getElementById(comment_id + "_hide_form"))
+        document.getElementById(comment_id + "_show_form").style.display = 'none';
+    }
+    const hide_form = (comment_id) => {
+        document.getElementById(comment_id + "_comment_text").style.display = 'none';
+        document.getElementById(comment_id).style.display = 'none';
+        document.getElementById(comment_id + "_hide_form").style.display = 'none';
+        document.getElementById(comment_id + "_show_form").style.display = 'block';
+    }
+</script>
 

@@ -1,0 +1,18 @@
+<li style="list-style-type: none;">
+  <%= comment.text %> -
+  <small>Submitted <%= time_ago_in_words(comment.created_at) %> ago</small>
+
+  <%= simple_form_for [comment, Comment.new]  do |f| %>
+    <%= f.text_area :text, placeholder: "Add a comment", namespace: comment.id, :style => "display: none;" %>
+    <%= f.submit "Add Comment", id: comment.id, class: "btn btn-secondary btn-sm", :style => "display: none;"  %>
+    <button type="button" id="<%=comment.id%>_show_form"
+            onclick="display_comment_form(<%=comment.id%>)" class="btn btn-outline-dark btn-sm">Reply</button>
+    <button type="button" id="<%=comment.id%>_hide_form" style="display: none;"
+            onclick="hide_form(<%=comment.id%>)" class="btn btn-outline-dark btn-sm">Close</button>
+  <% end %>
+
+  <ul>
+    <%= render partial: 'comments/comment', collection: comment.comments %>
+  </ul>
+
+</li>
