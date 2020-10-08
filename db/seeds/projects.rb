@@ -1,7 +1,7 @@
 require "faker"
 
 puts "Generation of fake Projects"
-20.times do
+4.times do
   dummy_project = {
     name: Faker::Lorem.sentence(word_count: 3),
     summary: Faker::Lorem.paragraph(sentence_count: 5),

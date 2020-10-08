@@ -3,6 +3,8 @@ class TasksController < ApplicationController
   before_action :is_admin, except: :show
   before_action :get_users, only: [:new, :edit]
   before_action :set_task, only: [:destroy, :edit, :update, :show]
+  before_action :set_available_statuses, only: [:edit, :update]
+  before_action :has_access_to_change_status, only: [:update]
 
   def new
   end
@@ -26,7 +28,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = @project.tasks.create(task_params.merge(created_by: current_user))
+    @task = @project.tasks.create(task_params.merge(created_by: current_user, status: "to do"))
     if @task.save
       TaskMailer.with(user: @task.assignee, task: @task).task_changed.deliver_later
       redirect_to project_path(@project), notice: "The task was created successfully"
@@ -52,6 +54,24 @@ class TasksController < ApplicationController
 
 
   private
+
+  def has_access_to_change_status
+    params_status = task_params.has_key?(:status) ? task_params[:status] : false
+    unless params_status && @available_statuses.include?(params_status)
+      redirect_to project_path(@project), alert: "You don't have permissions for this status"
+    end
+  end
+
+  def set_available_statuses
+    config = {
+      all: ["to do", "in progress", "in review", "done"],
+      to_do: ["in progress"],
+      in_progress: ["to do", "in review"],
+      in_review: [],
+      done: []
+    }
+    @available_statuses = current_user.admin ? config[:all] : config[@task.status.parameterize.underscore.to_sym]
+  end
 
   def task_params
     if params.has_key? :issue
