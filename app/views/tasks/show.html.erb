@@ -1,20 +1,28 @@
 <h3>Title: <%= @task.title + " (" + @task.type + ")" %></h3>
 <div class="row">
   <div class="col-md-6">
+    Assignee: <%= @task.assignee.get_full_name %>
     <h5>Description:</h5>
     <%= @task.description %>
   </div>
-  <div class="col-md-6">
-    <div>
-      Status: <b><%= @task.status %></b>
-    </div>
-    <div>
-      Assignee: <%= @task.assignee.get_full_name %>
-    </div>
+  <div class="col-md-3">
+    <% if @available_statuses.empty? %>
+      Status: <b><%=  @task.status  %></b>
+    <%  else  %>
+      <%= simple_form_for @task, url: project_task_url do |f| %>
+        <%  if @task.errors.any?  %>
+            <% @task.errors.full_messages.each do |msg| %>
+              <div class="alert alert-danger"><%=  msg  %></div>
+            <%  end  %>
+        <%  end  %>
+        <%= f.input :status, :as => :select, collection: @available_statuses,
+                  include_blank: false, wrapper_html: {class: "form-group"} %>
+        <%=  f.button :submit, "Update status", class: "btn btn-success btn-sm btn-block"  %>
+      <%  end  %>
+    <%  end %>
   </div>
 </div>
-<!--<%#= link_to(@task.title, @task.url, target: "_blank") %><br/>-->
-<!--<small>Submitted <%#= time_ago_in_words(@story.created_at) %> ago</small>-->
+<small>Submitted <%= time_ago_in_words(@task.created_at) %> ago</small>
 
 <h3>Comments</h3>
 <%= simple_form_for [@task.becomes(Task), Comment.new] do |f| %>

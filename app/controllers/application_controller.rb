@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include Pundit
+
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
@@ -11,5 +13,9 @@ class ApplicationController < ActionController::Base
     unless current_user.admin?
       redirect_to home_path, alert: "You do not have permissions for this action"
     end
+  end
+
+  def user_dont_have_permissions
+    redirect_to home_path, alert: "You do not have permissions for this action."
   end
 end

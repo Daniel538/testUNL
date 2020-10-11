@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
   devise_for :users
-  root 'projects#index', as: 'home'
+  devise_scope :user do
+    authenticated :user do
+      root "projects#index", as: :home
+    end
+
+    unauthenticated do
+      root "devise/sessions#new", as: :unauthenticated_home
+    end
+  end
+  # root "projects#index", as: "home"
 
   resources :projects do
     resources :tasks

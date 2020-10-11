@@ -12,10 +12,8 @@
     <%= f.input :title, wrapper_html: {class: "form-group"} %>
     <%= f.input :description, :as => :text, :input_html => { 'rows' => 5, 'cols' => 10 },
                 wrapper_html: {class: "form-group"}  %>
-    <% unless @available_statuses.empty? %>
-      <%=  f.input :status, :as => :select, collection: @available_statuses,
-                   include_blank: false, wrapper_html: {class: "form-group"} %>
-    <% end %>
+    <%=  f.input :status, :as => :select, collection: @available_statuses,
+                 include_blank: false, wrapper_html: {class: "form-group"} %>
     <%=  f.association :assignee, label: "Assignee", include_blank: false, label_method: :get_full_name,
                         wrapper_html: {class: "form-group"}   %>
     <%= f.button :submit, class: "btn btn-success btn-lg" %>
