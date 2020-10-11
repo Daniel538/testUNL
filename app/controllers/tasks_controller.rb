@@ -4,11 +4,11 @@ class TasksController < ApplicationController
   before_action :set_project
   before_action :get_users, only: [:new, :edit]
   before_action :set_task, only: [:destroy, :edit, :update, :show]
-  before_action :set_available_statuses, only: [:edit, :update, :show]
+  before_action :set_available_statuses, only: [:edit, :update, :show, :new]
   before_action :has_access_to_change_status, only: :update
 
   def new
-    @task = Project.new
+    @task = Task.new
     authorize @task
   end
 

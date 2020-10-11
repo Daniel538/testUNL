@@ -1,0 +1,16 @@
+<%= simple_form_for [@project, Task.new] do |f| %>
+  <% if @task.errors.any? %>
+    <% @task.errors.full_messages.each do |msg| %>
+      <div class="alert alert-danger"><%= msg %></div>
+    <% end %>
+  <% end %>
+
+  <%= f.input :title, wrapper_html: {class: "form-group"} %>
+  <%= f.input :description, :as => :text, :input_html => { 'rows' => 5, 'cols' => 10 },
+              wrapper_html: {class: "form-group"}  %>
+  <%= f.input :type, collection: %w[Story Issue], selected: "Story" %>
+  <%= f.association :assignee, label: "Assignee", include_blank: false, label_method: :get_full_name,
+                     wrapper_html: {class: "form-group"}   %>
+  <%= f.button :submit, class: "btn btn-success btn-lg" %>
+  <%=  link_to 'Cancel', project_path(@project), class: 'btn btn-outline-success btn-lg' %>
+<% end %>

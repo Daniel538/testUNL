@@ -9,16 +9,7 @@
     <% if @available_statuses.empty? %>
       Status: <b><%=  @task.status  %></b>
     <%  else  %>
-      <%= simple_form_for @task, url: project_task_url do |f| %>
-        <%  if @task.errors.any?  %>
-            <% @task.errors.full_messages.each do |msg| %>
-              <div class="alert alert-danger"><%=  msg  %></div>
-            <%  end  %>
-        <%  end  %>
-        <%= f.input :status, :as => :select, collection: @available_statuses,
-                  include_blank: false, wrapper_html: {class: "form-group"} %>
-        <%=  f.button :submit, "Update status", class: "btn btn-success btn-sm btn-block"  %>
-      <%  end  %>
+      <%= render 'tasks/forms/edit_task' %>
     <%  end %>
   </div>
 </div>
