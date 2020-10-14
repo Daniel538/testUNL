@@ -14,7 +14,21 @@
   <%= link_to 'Edit project', edit_project_path(@project), class: 'btn btn-block btn-primary' if current_user.admin?%>
 </div>
 <hr>
-
+<div class="col-md-12">
+  <div class="progress">
+    <div id="to_do" class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: <%=@status_counts['to do'].to_f/@status_counts.values.sum * 100 %>%">To Do</div>
+  </div>
+  <div class="progress">
+    <div id="in_progress" class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" style="width: <%=@status_counts['in progress'].to_f/@status_counts.values.sum * 100 %>%">In Progress</div>
+  </div>
+  <div class="progress">
+    <div id="in_review" class="progress-bar progress-bar-striped bg-warning progress-bar-animated" role="progressbar" style="width: <%=@status_counts['in review'].to_f/@status_counts.values.sum * 100 %>%">In Review</div>
+  </div>
+  <div class="progress">
+    <div id="done" class="progress-bar progress-bar-striped bg-success bg-info progress-bar-animated" role="progressbar" style="width: <%=@status_counts['done'].to_f/@status_counts.values.sum * 100 %>%">Done</div>
+  </div>
+</div>
+<hr>
 <table class="table text-center">
   <thead class="thead-dark">
     <tr>

@@ -39,7 +39,7 @@ gem "simple_form"
 # decorators
 gem "dry-struct"
 # background job back-end
-gem "delayed_job"
+gem "delayed_job_active_record"
 # env
 gem "dotenv-rails", :groups => [:development, :test]
 
@@ -72,3 +72,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem "cable_ready", "~> 4.3"

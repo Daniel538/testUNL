@@ -13,6 +13,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    @status_counts = @project.tasks.group(:status).count
   end
 
   def edit
